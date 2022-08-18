@@ -3,7 +3,10 @@ import { Button, Modal, Table } from 'antd'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { operaciones } from '../../../../../utils/mocked-data'
+import {
+  deleteOperation,
+  getOperations,
+} from '../../../../../services/services'
 
 const Wrapper = styled.div`
   overflow: auto;
@@ -16,13 +19,8 @@ const ButtonWrapper = styled.div`
 `
 
 const HomeTable = () => {
+  //const
   const [operations, setOperations] = useState([])
-  console.log(operaciones)
-
-  useEffect(() => {
-    setOperations(operaciones)
-  }, [])
-
   const columns = [
     {
       title: 'ID',
@@ -41,7 +39,7 @@ const HomeTable = () => {
     },
     {
       title: 'Date',
-      dataIndex: 'date',
+      dataIndex: 'createdAt',
       key: 'date',
     },
     {
@@ -49,12 +47,12 @@ const HomeTable = () => {
       dataIndex: 'type',
       filters: [
         {
-          text: 'Ingreso',
-          value: 'Ingreso',
+          text: 'Entry',
+          value: 'ENTRY',
         },
         {
-          text: 'Egreso',
-          value: 'Egreso',
+          text: 'Outflow',
+          value: 'OUTFLOW',
         },
       ],
       key: 'type',
@@ -64,7 +62,7 @@ const HomeTable = () => {
       key: 'actions',
       title: 'Actions',
       render: (operation) => {
-        function onClick() {
+        async function onClick() {
           return handleDelete(operation)
         }
 
@@ -81,22 +79,49 @@ const HomeTable = () => {
     },
   ]
 
+  //useeffect
+
+  useEffect(() => {
+    fetchServerData()
+  }, [])
+
+  //functions
+
+  const fetchServerData = async () => {
+    try {
+      const info = await getOperations()
+      const result = info.data.data
+      setOperations(result)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   const onChange = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra)
   }
 
   const handleDelete = (operation) => {
     Modal.confirm({
-      title: 'Are you sure, you want to delete this opartion record?',
+      title: 'Are you sure, you want to delete this operation?',
       okText: 'Yes',
       okType: 'danger',
       onOk: () => {
-        setOperations((pre) => {
-          return pre.filter((op) => op.id !== operation.id)
-        })
+        deleteOperation(operation.id)
       },
     })
   }
+
+  // const handleEdit = (operation) => {
+  //   Modal.confirm({
+  //     title: 'Are you sure, you want to delete this operation?',
+  //     okText: 'Yes',
+  //     okType: 'danger',
+  //     onOk: () => {
+  //       deleteOperation(operation.id)
+  //     },
+  //   })
+  // }
 
   return (
     <Wrapper>
@@ -107,9 +132,7 @@ const HomeTable = () => {
         onChange={onChange}
       />
       <ButtonWrapper>
-        <Button onClick={console.log('Button clicked')}>
-          Add new Operation.
-        </Button>
+        <Button>Add new Operation</Button>
       </ButtonWrapper>
     </Wrapper>
   )

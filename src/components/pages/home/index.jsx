@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 
-import AddressInput from './components/addressInput'
 import BalanceCard from './components/balanceCard'
 import HomeTable from './components/homeTable/index'
 
@@ -9,14 +8,13 @@ const Wrapper = styled.div`
   padding: 20px;
 `
 
-const Table = () => {
+const Home = () => {
   return (
     <Wrapper>
-      <AddressInput />
       <BalanceCard />
       <HomeTable />
     </Wrapper>
   )
 }
 
-export default Table
+export default Home
