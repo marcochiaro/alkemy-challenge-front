@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 import useOperations from '../../../hook/useOperations'
 import BalanceCard from './components/balanceCard'
+import FormOperation from './components/formOperation'
 import HomeTable from './components/homeTable/index'
 
 const Wrapper = styled.div`
@@ -9,12 +10,27 @@ const Wrapper = styled.div`
   padding: 20px;
 `
 
+const FormWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px;
+`
+
 const Home = () => {
-  const { operations, isLoading, getAllOperations, deleteOperationById } =
-    useOperations()
+  const {
+    operations,
+    isLoading,
+    balance,
+    getAllOperations,
+    deleteOperationById,
+    createNewOperation,
+  } = useOperations()
   return (
     <Wrapper>
-      <BalanceCard />
+      <BalanceCard balance={balance} />
+      <FormWrapper>
+        <FormOperation createNewOperation={createNewOperation} />
+      </FormWrapper>
       <HomeTable
         operations={operations}
         isLoading={isLoading}

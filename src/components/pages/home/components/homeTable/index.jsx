@@ -1,16 +1,10 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
-import { Button, Modal, Table } from 'antd'
+import { Modal, Table } from 'antd'
 import { useEffect } from 'react'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
   overflow: auto;
-`
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 20px;
 `
 
 const HomeTable = ({
@@ -116,9 +110,6 @@ const HomeTable = ({
         onChange={onChange}
         loading={isLoading}
       />
-      <ButtonWrapper>
-        <Button>Add new Operation</Button>
-      </ButtonWrapper>
     </Wrapper>
   )
 }
