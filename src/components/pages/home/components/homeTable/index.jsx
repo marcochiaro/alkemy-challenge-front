@@ -1,12 +1,9 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import { Button, Modal, Table } from 'antd'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import styled from 'styled-components'
 
-import {
-  deleteOperation,
-  getOperations,
-} from '../../../../../services/services'
+import { deleteOperation } from '../../../../../services/services'
 
 const Wrapper = styled.div`
   overflow: auto;
@@ -18,9 +15,7 @@ const ButtonWrapper = styled.div`
   margin: 20px;
 `
 
-const HomeTable = () => {
-  //const
-  const [operations, setOperations] = useState([])
+const HomeTable = ({ operations, getAllOperations, isLoading }) => {
   const columns = [
     {
       title: 'ID',
@@ -79,23 +74,9 @@ const HomeTable = () => {
     },
   ]
 
-  //useeffect
-
   useEffect(() => {
-    fetchServerData()
+    getAllOperations()
   }, [])
-
-  //functions
-
-  const fetchServerData = async () => {
-    try {
-      const info = await getOperations()
-      const result = info.data.data
-      setOperations(result)
-    } catch (error) {
-      console.error(error)
-    }
-  }
 
   const onChange = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra)
@@ -130,6 +111,7 @@ const HomeTable = () => {
         columns={columns}
         pagination={false}
         onChange={onChange}
+        loading={isLoading}
       />
       <ButtonWrapper>
         <Button>Add new Operation</Button>

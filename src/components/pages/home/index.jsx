@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 
+import useOperations from '../../../hook/useOperations'
 import BalanceCard from './components/balanceCard'
 import HomeTable from './components/homeTable/index'
 
@@ -9,10 +10,15 @@ const Wrapper = styled.div`
 `
 
 const Home = () => {
+  const { operations, isLoading, getAllOperations } = useOperations()
   return (
     <Wrapper>
       <BalanceCard />
-      <HomeTable />
+      <HomeTable
+        operations={operations}
+        isLoading={isLoading}
+        getAllOperations={getAllOperations}
+      />
     </Wrapper>
   )
 }
