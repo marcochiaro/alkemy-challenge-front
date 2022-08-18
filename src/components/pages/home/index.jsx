@@ -10,7 +10,8 @@ const Wrapper = styled.div`
 `
 
 const Home = () => {
-  const { operations, isLoading, getAllOperations } = useOperations()
+  const { operations, isLoading, getAllOperations, deleteOperationById } =
+    useOperations()
   return (
     <Wrapper>
       <BalanceCard />
@@ -18,6 +19,7 @@ const Home = () => {
         operations={operations}
         isLoading={isLoading}
         getAllOperations={getAllOperations}
+        deleteOperationById={deleteOperationById}
       />
     </Wrapper>
   )

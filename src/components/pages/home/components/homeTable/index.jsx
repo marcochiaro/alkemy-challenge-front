@@ -3,8 +3,6 @@ import { Button, Modal, Table } from 'antd'
 import { useEffect } from 'react'
 import styled from 'styled-components'
 
-import { deleteOperation } from '../../../../../services/services'
-
 const Wrapper = styled.div`
   overflow: auto;
 `
@@ -15,7 +13,12 @@ const ButtonWrapper = styled.div`
   margin: 20px;
 `
 
-const HomeTable = ({ operations, getAllOperations, isLoading }) => {
+const HomeTable = ({
+  operations,
+  getAllOperations,
+  isLoading,
+  deleteOperationById,
+}) => {
   const columns = [
     {
       title: 'ID',
@@ -88,7 +91,7 @@ const HomeTable = ({ operations, getAllOperations, isLoading }) => {
       okText: 'Yes',
       okType: 'danger',
       onOk: () => {
-        deleteOperation(operation.id)
+        deleteOperationById(operation.id)
       },
     })
   }

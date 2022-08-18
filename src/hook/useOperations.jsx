@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState } from 'react'
 
-import { getOperations } from '../services/services'
+import { deleteOperation, getOperations } from '../services/services'
 
 const useOperations = () => {
   const [operations, setOperations] = useState([])
@@ -34,7 +34,21 @@ const useOperations = () => {
   //   }
   // }
 
-  return { operations, isLoading, getAllOperations }
+  const deleteOperationById = async (id) => {
+    try {
+      setIsLoading(true)
+      const response = await deleteOperation(id)
+      if (response) {
+        setOperations(operations.filter((op) => op.id !== id))
+      }
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  return { operations, isLoading, getAllOperations, deleteOperationById }
 }
 
 export default useOperations
