@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 
 const FormWrapper = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   margin: 10px;
 `
 
@@ -24,6 +24,7 @@ const Home = () => {
     getAllOperations,
     deleteOperationById,
     createNewOperation,
+    editOperationById,
   } = useOperations()
   return (
     <Wrapper>
@@ -36,6 +37,7 @@ const Home = () => {
         isLoading={isLoading}
         getAllOperations={getAllOperations}
         deleteOperationById={deleteOperationById}
+        editOperationById={editOperationById}
       />
     </Wrapper>
   )

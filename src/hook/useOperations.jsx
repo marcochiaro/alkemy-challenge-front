@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import {
   createOperation,
   deleteOperation,
+  editOperation,
   getOperations,
 } from '../services/services'
 
@@ -55,13 +56,25 @@ const useOperations = () => {
     try {
       const response = await createOperation(operation)
       if (response) {
-        console.log('>Op', operations)
-        console.log(response.data.data)
-        console.log([...operations, response.data.data])
         setOperations([...operations, response.data.data])
       }
     } catch (error) {
       console.error(error)
+    }
+  }
+
+  const editOperationById = async (id, newOperation) => {
+    try {
+      const response = await editOperation(id, newOperation)
+      console.log(response)
+      if (response) {
+        const newOperations = operations.map((op) => {
+          return op.id === response.data.data.id ? response.data.data : op
+        })
+        setOperations(newOperations)
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -72,6 +85,7 @@ const useOperations = () => {
     getAllOperations,
     deleteOperationById,
     createNewOperation,
+    editOperationById,
   }
 }
 

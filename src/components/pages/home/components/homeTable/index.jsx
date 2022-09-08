@@ -1,7 +1,9 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import { Modal, Table } from 'antd'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+
+import EditModal from './EditModal/index'
 
 const Wrapper = styled.div`
   overflow: auto;
@@ -12,7 +14,10 @@ const HomeTable = ({
   getAllOperations,
   isLoading,
   deleteOperationById,
+  editOperationById,
 }) => {
+  const [isEditing, setIsEditing] = useState(false)
+  const [editingOperation, setEditingOperation] = useState(null)
   const columns = [
     {
       title: 'ID',
@@ -54,15 +59,18 @@ const HomeTable = ({
       key: 'actions',
       title: 'Actions',
       render: (operation) => {
-        async function onClick() {
+        async function onDelete() {
           return handleDelete(operation)
+        }
+        async function onEdit() {
+          return handleEdit(operation)
         }
 
         return (
           <>
-            <EditOutlined />
+            <EditOutlined onClick={onEdit} />
             <DeleteOutlined
-              onClick={onClick}
+              onClick={onDelete}
               style={{ color: 'red', marginLeft: 12 }}
             />
           </>
@@ -90,16 +98,10 @@ const HomeTable = ({
     })
   }
 
-  // const handleEdit = (operation) => {
-  //   Modal.confirm({
-  //     title: 'Are you sure, you want to delete this operation?',
-  //     okText: 'Yes',
-  //     okType: 'danger',
-  //     onOk: () => {
-  //       deleteOperation(operation.id)
-  //     },
-  //   })
-  // }
+  const handleEdit = (operation) => {
+    setIsEditing(true)
+    setEditingOperation(operation)
+  }
 
   return (
     <Wrapper>
@@ -109,6 +111,13 @@ const HomeTable = ({
         pagination={false}
         onChange={onChange}
         loading={isLoading}
+        renderEmpty={'No Operations'}
+      />
+      <EditModal
+        visible={isEditing}
+        setVisible={setIsEditing}
+        editOperationById={editOperationById}
+        editingOperation={editingOperation}
       />
     </Wrapper>
   )

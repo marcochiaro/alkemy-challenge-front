@@ -1,19 +1,24 @@
-import { Col, Row, Statistic } from 'antd'
+import { Statistic } from 'antd'
+import styled from 'styled-components'
+
+const CardWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+`
 
 const BalanceCard = ({ balance }) => {
   return (
-    <Row gutter={16}>
-      <Col span={12}>
-        <Statistic
-          title="Account Balance (ARG)"
-          value={balance}
-          precision={2}
-          style={{
-            marginBottom: '15px',
-          }}
-        />
-      </Col>
-    </Row>
+    <CardWrapper>
+      <Statistic
+        title="Account Balance (ARG)"
+        value={balance}
+        precision={2}
+        style={{
+          marginBottom: '15px',
+        }}
+      />
+    </CardWrapper>
   )
 }
 
