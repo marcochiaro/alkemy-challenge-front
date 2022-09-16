@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import styled from 'styled-components'
 
 import useOperations from '../../../hook/useOperations'
 import BalanceCard from './components/balanceCard'
 import FormOperation from './components/formOperation'
 import HomeTable from './components/homeTable/index'
+import UserLogin from './components/userLogin'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -17,6 +19,9 @@ const FormWrapper = styled.div`
 `
 
 const Home = () => {
+
+  const [isLogged, setIsLogged] = useState(false);
+
   const {
     operations,
     isLoading,
@@ -26,6 +31,7 @@ const Home = () => {
     createNewOperation,
     editOperationById,
   } = useOperations()
+
   return (
     <Wrapper>
       <BalanceCard balance={balance} />
@@ -33,14 +39,18 @@ const Home = () => {
         <FormOperation createNewOperation={createNewOperation} />
       </FormWrapper>
       <HomeTable
-        operations={operations}
-        isLoading={isLoading}
-        getAllOperations={getAllOperations}
-        deleteOperationById={deleteOperationById}
-        editOperationById={editOperationById}
+      operations={operations}
+      isLoading={isLoading}
+      getAllOperations={getAllOperations}
+      deleteOperationById={deleteOperationById}
+      editOperationById={editOperationById}
       />
+      <UserLogin />
     </Wrapper>
+
   )
+          
 }
+
 
 export default Home
